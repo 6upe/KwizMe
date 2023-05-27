@@ -6,9 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script> -->
-
-
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/bootstrap.css">
     <style>
@@ -31,76 +28,59 @@
             color: #555;
         }
 
-        #pptx-file-input {
-            display: none;
-        }
+
     </style>
 </head>
 
 <body>
-    <div style="display: none">
-        <button id="getWeather">Get Weather</button> <br>
-        <hr>
-        <input type="button" value="Get Questions here" onclick="getQuestions()">
-        <div id="questions"></div>
-        <hr>
-    </div>
-    <div style=" display: flex; align-content: center; justify-content: center; margin-top: 10%;">
+
+
+    <!-- <input type="button" value="Get Questions" onclick="getQuestions()"> -->
+    <!-- <div id="questions"></div> -->
+    <!-- <input type="file" id="pptx-file-input" accept=".pptx"> -->
+
+    <!-- <div id="slideContent"></div> -->
+
+    <div style=" display: flex; align-content: center; justify-content: center; margin-top: 3%;">
         <div style="width: 80%;" class="jumbotron">
-            <a href="kwizme.html" class="btn btn-success">Launch a Quiz</a>
             <h1 class="display-4">Kwizme</h1>
             <hr class="my-4">
             <div id="drag-drop-area">
                 <img src="./images/ppt-icon-4.jpg" alt="PowerPoint Icon">
-                <p id="drag-text">Drag and drop your PowerPoint file here</p>
-                <input type="file" id="pptx-file-input" accept=".pptx">
+                <p id="drag-text">select PowerPoint file here</p>
+                <input class="form-control" type="file" id="pptx-file-input" accept=".pptx">
             </div>
+            
             <hr class="my-4">
-            <div id="slideContent">
-
+            <button class="btn btn-warning my-5" style="display: none" onclick="copyContent()" id="cpy-btn">Copy</button>
+            <div style="overflow-y: scroll;" contenteditable="true" id="slideContent">
+                can you make short quiz questions and short answers from the following data
+                <br>
+                
             </div>
             <button style="display: none" onclick="copyContent()" id="cpy-btn">Copy Content</button>
             <hr class="my-4">
         </div>
     </div>
 
-    
-    <!-- <script src="JZip.js" type="text/javascript"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js" type="text/javascript"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
     <script src="./js/bootstrap.js"></script>
 
-    <script defer>
-        const dragDropArea = document.getElementById('drag-drop-area');
+    <script>
         var cpybtn = document.getElementById('cpy-btn');
-        const dragText = document.getElementById('drag-text');
-
-        const getWeather = document.getElementById('getWeather');
-
-        dragDropArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dragText.textContent = 'Drop the PowerPoint file here';
-        });
-
-        dragDropArea.addEventListener('dragleave', () => {
-            dragText.textContent = 'Drag and drop your PowerPoint file here';
-        });
-
-
-        getWeather.addEventListener("click", () => {
-            console.log('hi there');
-        });
-
+        const dragDropArea = document.getElementById('drag-drop-area');
         const pptxFileInput = document.getElementById("pptx-file-input");
         const slideContent = document.getElementById("slideContent");
+        const dragText = document.getElementById('drag-text');
 
 
-        dragDropArea.addEventListener("drop", (e) => {
-            e.preventDefault();
-            dragText.textContent = 'file name';
+        slideContent.style.display = "none";
 
+        pptxFileInput.addEventListener("change", () => {
             console.log('pptx loaded');
+            slideContent.style.display = "block";
+            cpybtn.style.display = "block";
 
             const pptxFile = pptxFileInput.files[0];
             const zip = new JSZip();
@@ -117,19 +97,14 @@
 
                 Promise.all(slidePromises).then((slides) => {
                     const slideContents = slides.map((xml) => parseSlideXML(xml));
-                    const concatenatedSlides = slideContents.join('<br>');
-                    slideContent.innerHTML = concatenatedSlides;
-
+                    const concatenatedSlides = slideContents.join();
+                    // slideContent.innerHTML = concatenatedSlides;
                     slideContents.forEach(item => {
                         slideContent.innerHTML += `<pre>${item}</pre>`;
-                        cpybtn.style.display = 'block';
                     });
                 });
 
             });
-
-            
-
         });
 
         function parseSlideXML(xml) {
@@ -145,6 +120,9 @@
 
             return slideText.trim();
         }
+
+        // ...
+
 
         function copyContent() {
             var content = document.getElementById("slideContent").innerText; // get the text content of the div
@@ -164,9 +142,8 @@
         // OPEN AI API fetch
 
         function getQuestions() {
-            console.log('waiting for response from API');
             const questionsDiv = document.getElementById('questions');
-            const APIKEY = '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';
+            const APIKEY = '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';
 
             const prompt = 'The quick brown fox jumps over the lazy dog.';
 
@@ -184,7 +161,6 @@
                     'n': 3,
                     'stop': ['\n']
                 }),
-                mode: 'cors' // Add this line
             })
                 .then(response => response.json())
                 .then(data => {
@@ -195,10 +171,9 @@
                 .catch(error => {
                     console.error(error);
                     // handle errors here
+
                 });
         }
-
-
 
     </script>
 </body>

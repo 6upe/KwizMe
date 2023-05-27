@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/bootstrap.css">
+
+</head>
+
+<body>
+
+
+    <div style=" display: flex; align-content: center; justify-content: center; margin-top: 3%;">
+        <div style="width: 80%;" class="jumbotron">
+            <div class="courses">
+                <button onclick="changeCourse(4410)" class="btn btn-success">BIT 4410</button>
+                <button onclick="changeCourse(4411)" class="btn btn-primary">BIT 4411</button>
+                <button onclick="changeCourse(4420)" class="btn btn-warning">BIT 4420</button>
+                <button onclick="changeCourse(4430)" class="btn btn-danger">BIT 4430</button>
+            </div>
+            <h1 class="display-4">Kwizme</h1>
+            <hr class="my-4">
+            <div class="card">
+                <div class="card-body  px-4">
+                    <h5 class="card-title my-3" id="question"> <b>What is lorem Ipsum dore sit fimo fimo?</b></h5>
+                    <p class="card-text" id="answer">
+
+
+
+                    </p>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="controls" style="display: flex; justify-content: space-between;">
+                <button class="btn btn-success show-answer-btn">Show Answer</button>
+                <div>
+                    <button class="btn btn-warning prev-question-btn mx-2">Prev </button>
+                    <button class="btn btn-primary next-question-btn">Next </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="questions.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/bootstrap.js"></script>
+
+
+    <script>
+        function main(){
+            let counter = 0;
+        const question = document.getElementById("question");
+        const answer = document.getElementById("answer");
+        const prevBtn = document.querySelector('.prev-question-btn');
+        const nextBtn = document.querySelector('.next-question-btn');
+        const showAnswerBtn = document.querySelector('.show-answer-btn');
+
+        if (counter == 0) {
+            question.innerText = questionsArray[counter].question;
+            answer.innerText = questionsArray[counter].answer;
+            prevBtn.style.display = "none";
+            counter++;
+        } else
+            console.log("first questions");
+
+        console.log(counter);
+
+        nextBtn.addEventListener("click", () => {
+
+            console.log(counter);
+
+            if (questionsArray.length == counter) {
+                question.innerText = "Quiz Ended! 😜";
+                answer.innerText = "Have a Good Day! ✌";
+                nextBtn.style.display = "none";
+            } else if (counter == 0) {
+                prevBtn.style.display = "none";
+                question.innerText = questionsArray[counter].question;
+                answer.innerText = questionsArray[counter].answer;
+                counter++;
+            } else {
+
+                question.innerText = questionsArray[counter].question;
+                answer.innerText = questionsArray[counter].answer;
+                prevBtn.style.display = "inline";
+                counter++;
+            }
+
+
+        });
+
+        prevBtn.addEventListener("click", () => {
+            counter = counter - 1;
+
+            question.innerText = questionsArray[counter].question;
+            answer.innerText = questionsArray[counter].answer;
+            nextBtn.style.display = "inline";
+
+            console.log(counter);
+
+            if (counter == 0) {
+                prevBtn.style.display = "none";
+            }
+
+        });
+
+        showAnswerBtn.addEventListener("click", () => {
+            // answer.innerHTML = `
+            //     <div class="progress">
+            //         <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+            //     </div>
+            // `;
+        });
+        }
+        
+        main();
+    </script>
+
+
+</body>
+
+</html>

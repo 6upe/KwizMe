@@ -1,0 +1,25 @@
+{
+  "name": "kwizme",
+  "version": "1.0.0",
+  "description": "upload file and gen questions",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "6upe"
+  },
+  "keywords": [
+    "quiz",
+    "question",
+    "exam",
+    "test"
+  ],
+  "author": "Bupe Katongo",
+  "license": "ISC",
+  "dependencies": {
+    "openai": "^3.2.1"
+  }
+}
