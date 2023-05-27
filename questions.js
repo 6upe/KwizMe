@@ -1,5 +1,12 @@
 let questionsArray = [];
 
+questionsArray = [{
+
+    question: "Select a Course to start the Quiz🙌",
+    answer: "😁🐱‍🏍"
+
+}];
+
 const BIT4430 = [
     {
         question: "State and briefly define the 2 Privacy Laws",
